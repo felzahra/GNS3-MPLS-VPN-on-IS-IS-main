@@ -1,0 +1,36 @@
+Jun 01 22:29:04.739 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jun 01 22:29:04.739 HYPERVISOR: Started on IP = localhost, TCP port = 55321.
+Jun 01 22:29:05.241 HYPERVISOR: exec_cmd: hypervisor version 
+Jun 01 22:29:05.241 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips 
+Jun 01 22:29:05.241 GENERAL: working_dir=C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips
+Jun 01 22:29:05.241 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips\871b3fd5-196d-4ea5-b858-bb199c7842f5 
+Jun 01 22:29:05.244 GENERAL: working_dir=C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips\871b3fd5-196d-4ea5-b858-bb199c7842f5
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm create Router6 4 c7200 
+Jun 01 22:29:05.244 VM: VM Router6 created.
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_con_tcp_port Router6 5003 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: c7200 get_mac_addr Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 0 0 C7200-IO-FE 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_disk0 Router6 0 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_exec_area Router6 64 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_idle_pc Router6 0x62f20ff4 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_ios Router6 C:/Users/fatma/GNS3/images/IOS/c7200-adventerprisek9-mz.152-4.S7.image 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: c7200 set_mac_addr Router6 ca04.15c4.0000 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_nvram Router6 512 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm set_ram Router6 512 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm slot_remove_binding Router6 0 0 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 0 0 C7200-IO-2FE 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 1 0 PA-2FE-TX 
+Jun 01 22:29:05.244 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.252 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 2 0 PA-2FE-TX 
+Jun 01 22:29:05.252 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.252 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 3 0 PA-2FE-TX 
+Jun 01 22:29:05.252 HYPERVISOR: exec_cmd: vm get_status Router6 
+Jun 01 22:29:05.252 HYPERVISOR: exec_cmd: vm slot_add_binding Router6 4 0 PA-2FE-TX 
+Jun 01 22:29:17.902 HYPERVISOR: Stopped.
+Jun 01 22:29:17.902 VM: VM Router6 destroyed.
+Jun 01 22:29:17.903 GENERAL: reset done.

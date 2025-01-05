@@ -1,0 +1,71 @@
+conf t
+hostname R5
+no ip domain lookup
+Ipv6 unicast-routing
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0005.00
+exit
+ip vrf cust-a
+rd 64100:100
+route-target export 64100:100
+route-target import 64100:100
+exit
+ip vrf cust-b
+rd 64100:200
+route-target export 64100:200
+route-target import 64100:200
+exit
+mpls label range 500 599
+mpls ip
+int f1/1
+
+ip vrf forwarding cust-b
+
+Ipv6 address 2001:db8:1:2::1/64
+
+no shut
+int f1/0
+
+ip vrf forwarding cust-a
+
+Ipv6 address 2001:db8:1:1::2/64
+no shut
+int lo 1
+
+Ipv6 address 2001:db8:8:12::1/128
+
+ip router isis 100
+no shut
+
+int f0/1
+Ipv6 address 2001:db8:1:5::1/64
+ip router isis 100
+mpls ip
+no shut
+
+int f0/0
+
+ip add 10.5.6.1 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+exit
+
+
+router bgp 64100
+neighbor 2001:db8:8:13::1/128 remote-as 64100
+neighbor 2001:db8:8:13::1/128 update-source lo1
+Address-family ipv6 unicast vrf cust-a 
+neighbor 2001:db8:1:1::1/64 remote-as 65500 
+exit-address-family
+address-family ipv6 unicast vrf cust-b 
+neighbor 2001:db8:1:2::2/64 remote-as 64500 
+exit-address-family
+Address-family vpnv6 unicast
+neighbor 2001:db8:8:13::1/128 activate
+neighbor 2001:db8:8:13::1/128 send-community extended
+
+exit
+end
+

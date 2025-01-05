@@ -1,0 +1,28 @@
+conf t 
+hostname R3
+no ip domain lookup
+Ipv6 unicast-routing
+router ospf 307
+network 192.168.2.0 0.0.0.255 area 0
+network 3.3.3.3 0.0.0.0 area 0
+network 10.7.3.0 0.0.0.3 area 0
+
+network 2001:db8:1:11::1/64 area 0
+network 2001:db8:10:1::1/128 area 0
+network 2001:db8:3:1::1/64 area 0
+
+int f1/0
+
+ip add 10.7.3.1 255.255.255.252
+Ipv6 address 2001:db8:1:11::1/64
+no shut
+int lo 0 
+ip add 3.3.3.3 255.255.255.255
+Ipv6 address 2001:db8:10:1::1/128
+
+no shut
+int lo 1
+ip add 192.168.2.1 255.255.255.0
+Ipv6 address 2001:db8:3:1::1/64
+no shut
+end

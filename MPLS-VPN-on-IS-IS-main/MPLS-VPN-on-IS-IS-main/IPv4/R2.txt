@@ -1,0 +1,18 @@
+conf t
+hostname R2
+no ip domain lookup
+router ospf 208
+network 192.168.2.0 0.0.0.255 area 0
+network 2.2.2.2 0.0.0.0 area 0
+network 10.8.2.0 0.0.0.3 area 0
+int f0/0
+
+ip add 10.8.2.1 255.255.255.252
+no shut
+int lo 0
+ip add 2.2.2.2 255.255.255.255
+no shut
+int lo 1
+ip add 192.168.2.1 255.255.255.0
+no shut
+end

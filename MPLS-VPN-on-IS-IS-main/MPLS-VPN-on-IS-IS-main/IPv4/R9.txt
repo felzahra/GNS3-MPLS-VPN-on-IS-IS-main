@@ -1,0 +1,81 @@
+conf t
+hostname R9
+no ip domain lookup
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0009.00
+exit
+ip vrf cust-a
+rd 64100:100
+route-target export 64100:100
+route-target import 64100:100
+exit
+ip vrf cust-b
+rd 64100:200
+route-target export 64100:200
+route-target import 64100:200
+exit
+mpls label range 900 999
+mpls ip
+int f0/1
+
+ip vrf forwarding cust-b
+ip add 10.9.4.2 255.255.255.252
+no shut
+int f4/1
+
+ip vrf forwarding cust-a
+ip add 10.9.11.2 255.255.255.252
+no shut
+int f0/0
+
+ip add 10.9.7.2 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+int f1/0
+
+ip add 10.6.9.2 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+int f1/1
+
+ip add 10.8.9.2 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+int lo 1
+ip add 9.9.9.9 255.255.255.252
+ip router isis 100
+no shut
+router eigrp 910
+address-family ipv4 vrf cust-a 
+autonomous-system 65500
+no auto-summary
+network 10.9.11.0 0.0.0.3
+redistribute bgp 64100 metric 1000 100 255 1 1500
+router eigrp 904
+address-family ipv4 vrf cust-b 
+autonomous-system 64500
+no auto-summary
+network 10.9.4.0 0.0.0.3
+redistribute bgp 64100 metric 1000 100 255 1 1500 
+exit
+router bgp 64100
+neighbor 6.6.6.6 remote-as 64100
+neighbor 6.6.6.6 update-source loopback 1
+address-family ipv4 vrf cust-b
+!redistribute eigrp 904 vrf cust-b ---- not working in eve-ng
+network 4.4.4.4 mask 255.255.255.255
+network 192.168.3.0 mask 255.255.255.0
+address-family ipv4 vrf cust-a
+!redistribute eigrp 910 vrf cust-a ---- not working in eve-ng
+network 192.168.3.0 mask 255.255.255.0
+network 11.11.11.11 mask 255.255.255.255
+exit
+address-family vpnv4 
+neighbor 6.6.6.6 activate
+neighbor 6.6.6.6 send-community extended
+exit
+end

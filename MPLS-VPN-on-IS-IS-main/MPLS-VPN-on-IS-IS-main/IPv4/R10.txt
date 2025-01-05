@@ -1,0 +1,20 @@
+conf t
+hostname R10
+no ip domain lookup
+int f1/1
+
+ip add 10.5.10.2 255.255.255.252
+no shut
+int lo 0
+ip add 10.10.10.10 255.255.255.255
+int lo 1
+ip add 192.168.1.1 255.255.255.0
+no shut
+exit
+router bgp 64500
+bgp router-id 10.10.10.10
+neighbor 10.5.10.1 remote-as 64100
+network 10.10.10.10 mask 255.255.255.255
+network 192.168.1.0 mask 255.255.255.0 
+end
+!

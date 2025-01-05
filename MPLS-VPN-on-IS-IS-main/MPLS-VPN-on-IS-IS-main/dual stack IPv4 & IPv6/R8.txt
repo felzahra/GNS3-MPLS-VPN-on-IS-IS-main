@@ -1,0 +1,81 @@
+conf t
+hostname R8
+no ip domain lookup
+Ipv6 unicast-routing
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0008.00
+exit
+ip vrf cust-b
+rd 64100:200
+route-target export 64100:200
+route-target import 64100:200
+exit
+mpls label range 800 899
+mpls ip
+router ospf 802 vrf cust-b
+domain-id 0.0.0.8
+network 0.0.0.0 255.255.255.255 area 0
+network 0:0:0:0:0:ffff:0:0/128 area 0
+redistribute bgp 64100 subnet
+
+int f0/0
+ip vrf forwarding cust-b
+Ipv6 address 2001:db8:1:3::2/64
+ip add 10.8.2.2 255.255.255.252
+no shut
+
+int f0/1
+ip add 10.5.8.2 255.255.255.252
+Ipv6 address 2001:db8:1:5::2/64
+ip router isis 100
+mpls ip
+no shut
+
+int f4/1
+ip add 10.6.8.2 255.255.255.252
+Ipv6 address 2001:db8:1:6::2/64
+
+ip router isis 100
+mpls ip
+no shut
+
+int f1/1
+ip add 10.8.9.1 255.255.255.252
+Ipv6 address 2001:db8:1:7::1/64
+ip router isis 100
+mpls ip
+no shut
+
+int lo 1
+ip add 8.8.8.8 255.255.255.255
+Ipv6 address 2001:db8:8:15::1/128
+
+ip router isis 100
+no shut
+exit
+router bgp 64100
+neighbor 6.6.6.6 remote-as 64100
+neighbor 6.6.6.6 update-source loopback 1
+address-family ipv4 vrf cust-b
+redistribute ospf 802 vrf cust-b
+exit
+address-family vpnv4 
+neighbor 6.6.6.6 activate
+neighbor 6.6.6.6 send-community extended
+exit
+end
+
+!!!!!
+router bgp 64100
+neighbor 2001:db8:8:13::1/128 remote-as 64100
+neighbor 2001:db8:8:13::1/128 update-source loopback 1
+address-family ipv6 unicast vrf cust-b
+redistribute ospf 802 vrf cust-b
+exit
+address-family vpnv6 
+neighbor 2001:db8:8:13::1/128 activate
+neighbor 2001:db8:8:13::1/128 send-community extended
+exit
+end
+!!!!!

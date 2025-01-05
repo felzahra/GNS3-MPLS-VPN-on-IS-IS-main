@@ -1,0 +1,31 @@
+conf t
+hostname R11
+no ip domain lookup
+Ipv6 unicast-routing
+
+int f4/1
+ip add 10.9.11.1 255.255.255.252
+Ipv6 address 2001:db8:1:12::2/64
+no shut
+
+int lo 0 
+ip add 11.11.11.11 255.255.255.255
+Ipv6 address 2001:db8:8:18::1/128
+
+int lo 1
+ip add 192.168.3.1 255.255.255.0
+Ipv6 address 2001:db8:4:1::1/64
+no shut
+router eigrp 65500
+network 10.9.11.0 0.0.0.3
+network 192.168.3.0 0.0.0.255
+network 11.11.11.11 0.0.0.0
+
+network 2001:db8:1:12::1/64
+network 2001:db8:4:1::1/64
+network 2001:db8:8:18::1/128
+no auto-summary
+exit
+end
+!
+

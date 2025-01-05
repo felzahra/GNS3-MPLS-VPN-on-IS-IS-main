@@ -1,0 +1,78 @@
+conf t
+hostname R6
+no ip domain lookup
+Ipv6 unicast-routing
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0006.00
+exit
+mpls label range 600 699
+mpls ip
+router bgp 64100
+no auto
+no synchro
+template peer-session PE
+remote-as 64100
+update-source lo1
+exit
+template peer-policy PE 
+send-community extended
+route-reflector-client
+exit
+
+neighbor 2001:db8:8:1::1/128 remote-as 65500
+neighbor 2001:db8:8:1::1/128 ebgp-multihop 2
+neighbor 2001:db8:8:1::1/128 update-source lo1
+neighbor 2001:db8:8:17::1/128 remote-as 64500
+neighbor 2001:db8:8:17::1/128 ebgp-multihop 2
+neighbor 2001:db8:8:17::1/128 update-source lo1
+neighbor 2001:db8:8:12::1/128 inherit peer-session PE
+neighbor 2001:db8:8:14::1/128 inherit peer-session PE
+neighbor 2001:db8:8:15::1/128 inherit peer-session PE
+neighbor 2001:db8:8:16::1/128 inherit peer-session PE
+address-family vpnv6
+neighbor 2001:db8:8:12::1/128 activate
+neighbor 2001:db8:8:12::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:14::1/128 activate
+neighbor 2001:db8:8:14::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:15::1/128 activate 
+neighbor 2001:db8:8:15::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:16::1/128 activate 
+neighbor 2001:db8:8:16::1/128 inherit peer-policy PE
+
+
+
+
+int f0/0
+
+Ipv6 address 2001:db8:1:4::2/64
+ip router isis 100
+mpls ip
+no shut
+
+int f4/1
+Ipv6 address 2001:db8:1:6::1/64
+
+ip router isis 100
+mpls ip
+no shut
+int f1/0
+
+Ipv6 address 2001:db8:1:8::1/64
+ip router isis 100
+mpls ip
+no shut
+
+int f0/1
+Ipv6 address 2001:db8:1:9::1/64
+
+ip router isis 100
+mpls ip
+no shut
+
+int lo 1 
+
+Ipv6 address 2001:db8:8:13::1/128
+ip router isis 100
+no shut
+exit

@@ -1,0 +1,60 @@
+conf t
+hostname R5
+no ip domain lookup
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0005.00
+exit
+ip vrf cust-a
+rd 64100:100
+route-target export 64100:100
+route-target import 64100:100
+exit
+ip vrf cust-b
+rd 64100:200
+route-target export 64100:200
+route-target import 64100:200
+exit
+mpls label range 500 599
+mpls ip
+int f1/1
+
+ip vrf forwarding cust-b
+ip add 10.5.10.1 255.255.255.252
+no shut
+int f1/0
+
+ip vrf forwarding cust-a
+ip add 10.5.1.1 255.255.255.252
+no shut
+int lo 1
+ip add 5.5.5.5 255.255.255.255
+ip router isis 100
+no shut
+int f0/1
+
+ip add 10.5.8.1 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+int f0/0
+
+ip add 10.5.6.1 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+exit
+router bgp 64100
+neighbor 6.6.6.6 remote-as 64100
+neighbor 6.6.6.6 update-source lo1
+address-family ipv4 vrf cust-a
+neighbor 10.5.1.2 remote-as 65500 
+exit-address-family
+address-family ipv4 vrf cust-b
+neighbor 10.5.10.2 remote-as 64500 
+exit-address-family
+address-family vpnv4 
+neighbor 6.6.6.6 activate
+neighbor 6.6.6.6 send-community extended
+exit
+end

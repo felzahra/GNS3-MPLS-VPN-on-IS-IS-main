@@ -1,0 +1,18 @@
+conf t 
+hostname R3
+no ip domain lookup
+router ospf 307
+network 192.168.2.0 0.0.0.255 area 0
+network 3.3.3.3 0.0.0.0 area 0
+network 10.7.3.0 0.0.0.3 area 0
+int f1/0
+
+ip add 10.7.3.1 255.255.255.252
+no shut
+int lo 0 
+ip add 3.3.3.3 255.255.255.255
+no shut
+int lo 1
+ip add 192.168.2.1 255.255.255.0
+no shut
+end

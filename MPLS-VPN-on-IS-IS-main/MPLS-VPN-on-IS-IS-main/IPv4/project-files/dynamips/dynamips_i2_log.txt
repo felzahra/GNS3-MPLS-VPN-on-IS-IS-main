@@ -1,0 +1,36 @@
+Jun 01 22:29:03.658 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jun 01 22:29:03.658 HYPERVISOR: Started on IP = localhost, TCP port = 55315.
+Jun 01 22:29:04.148 HYPERVISOR: exec_cmd: hypervisor version 
+Jun 01 22:29:04.148 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips 
+Jun 01 22:29:04.148 GENERAL: working_dir=C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips
+Jun 01 22:29:04.148 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips\b4521768-68aa-4c90-93d4-7c22606c6a6e 
+Jun 01 22:29:04.154 GENERAL: working_dir=C:\Users\fatma\GNS3\projects\mpls ipv6 redistribute\project-files\dynamips\b4521768-68aa-4c90-93d4-7c22606c6a6e
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm create Router10 2 c7200 
+Jun 01 22:29:04.154 VM: VM Router10 created.
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_con_tcp_port Router10 5001 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: c7200 get_mac_addr Router10 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 0 0 C7200-IO-FE 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_disk0 Router10 0 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_exec_area Router10 64 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_idle_pc Router10 0x62f20ff4 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_ios Router10 C:/Users/fatma/GNS3/images/IOS/c7200-adventerprisek9-mz.152-4.S7.image 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: c7200 set_mac_addr Router10 ca02.4740.0000 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_nvram Router10 512 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm set_ram Router10 512 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.154 HYPERVISOR: exec_cmd: vm slot_remove_binding Router10 0 0 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 0 0 C7200-IO-2FE 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 1 0 PA-2FE-TX 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 2 0 PA-2FE-TX 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 3 0 PA-2FE-TX 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm get_status Router10 
+Jun 01 22:29:04.159 HYPERVISOR: exec_cmd: vm slot_add_binding Router10 4 0 PA-2FE-TX 
+Jun 01 22:29:17.902 HYPERVISOR: Stopped.
+Jun 01 22:29:17.902 VM: VM Router10 destroyed.
+Jun 01 22:29:17.903 GENERAL: reset done.

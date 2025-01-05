@@ -1,0 +1,99 @@
+conf t
+hostname R6
+no ip domain lookup
+Ipv6 unicast-routing
+router isis 100
+is-type level-2-only
+net 00.0000.0000.0006.00
+exit
+mpls label range 600 699
+mpls ip
+router bgp 64100
+no auto
+no synchro
+template peer-session PE
+remote-as 64100
+update-source lo1
+exit
+template peer-policy PE 
+send-community extended
+route-reflector-client
+exit
+neighbor 1.1.1.1 remote-as 65500
+neighbor 1.1.1.1 ebgp-multihop 2
+neighbor 1.1.1.1 update-source lo1
+neighbor 10.10.10.10 remote-as 64500
+neighbor 10.10.10.10 ebgp-multihop 2
+neighbor 10.10.10.10 update-source lo1
+neighbor 5.5.5.5 inherit peer-session PE
+neighbor 7.7.7.7 inherit peer-session PE
+neighbor 8.8.8.8 inherit peer-session PE
+neighbor 9.9.9.9 inherit peer-session PE
+address-family vpnv4
+neighbor 5.5.5.5 activate
+neighbor 5.5.5.5 inherit peer-policy PE
+neighbor 7.7.7.7 activate
+neighbor 7.7.7.7 inherit peer-policy PE
+neighbor 8.8.8.8 activate 
+neighbor 8.8.8.8 inherit peer-policy PE
+neighbor 9.9.9.9 activate 
+neighbor 9.9.9.9 inherit peer-policy PE
+exit
+
+!!!!!!!!!!!!!!!
+neighbor 2001:db8:8:1::1/128 remote-as 65500
+neighbor 2001:db8:8:1::1/128 ebgp-multihop 2
+neighbor 2001:db8:8:1::1/128 update-source lo1
+neighbor 2001:db8:8:17::1/128 remote-as 64500
+neighbor 2001:db8:8:17::1/128 ebgp-multihop 2
+neighbor 2001:db8:8:17::1/128 update-source lo1
+neighbor 2001:db8:8:12::1/128 inherit peer-session PE
+neighbor 2001:db8:8:14::1/128 inherit peer-session PE
+neighbor 2001:db8:8:15::1/128 inherit peer-session PE
+neighbor 2001:db8:8:16::1/128 inherit peer-session PE
+address-family vpnv6
+neighbor 2001:db8:8:12::1/128 activate
+neighbor 2001:db8:8:12::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:14::1/128 activate
+neighbor 2001:db8:8:14::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:15::1/128 activate 
+neighbor 2001:db8:8:15::1/128 inherit peer-policy PE
+neighbor 2001:db8:8:16::1/128 activate 
+neighbor 2001:db8:8:16::1/128 inherit peer-policy PE
+
+
+!!!!!!!!!!!!!!!!
+
+int f0/0
+ip add 10.5.6.2 255.255.255.252
+Ipv6 address 2001:db8:1:4::2/64
+ip router isis 100
+mpls ip
+no shut
+
+int f4/1
+Ipv6 address 2001:db8:1:6::1/64
+ip add 10.6.8.1 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+int f1/0
+ip add 10.6.9.1 255.255.255.252
+Ipv6 address 2001:db8:1:8::1/64
+ip router isis 100
+mpls ip
+no shut
+
+int f0/1
+Ipv6 address 2001:db8:1:9::1/64
+ip add 10.6.7.2 255.255.255.252
+ip router isis 100
+mpls ip
+no shut
+
+int lo 1 
+ip add 6.6.6.6 255.255.255.255
+Ipv6 address 2001:db8:8:13::1/128
+ip router isis 100
+no shut
+exit

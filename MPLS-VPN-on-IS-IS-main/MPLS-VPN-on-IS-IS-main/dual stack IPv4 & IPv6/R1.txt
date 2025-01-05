@@ -1,0 +1,24 @@
+conf t
+hostname R1
+no ip domain lookup
+Ipv6 unicast-routing
+int f1/0
+Ipv6 address 2001:db8:1:1::1/64
+ip add 10.5.1.2 255.255.255.252
+no shut
+int lo 0
+Ipv6 address 2001:db8:8:1::1/128
+ip add 1.1.1.1 255.255.255.255
+int lo 1
+Ipv6 address 2001:db8:2:1::1/64
+ip add 192.168.1.1 255.255.255.0
+no shut
+exit
+router bgp 65500
+bgp router-id 1.1.1.1
+neighbor 10.5.1.1 remote-as 64100
+network 1.1.1.1 mask 255.255.255.255
+network 192.168.1.0 mask 255.255.255.0 
+Neighbor 2001:db8:1:1::2 remote-as 64100
+Network 2001:db8:2:1::1/64
+Network 2001:db8:8:1::1/128

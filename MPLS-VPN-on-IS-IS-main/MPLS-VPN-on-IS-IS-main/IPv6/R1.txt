@@ -1,0 +1,21 @@
+conf t
+hostname R1
+no ip domain lookup
+Ipv6 unicast-routing
+int f1/0
+Ipv6 address 2001:db8:1:1::1/64
+no shut
+int lo 0
+Ipv6 address 2001:db8:8:1::1/128
+
+int lo 1
+Ipv6 address 2001:db8:2:1::1/64
+
+no shut
+exit
+router bgp 65500
+bgp router-id 1.1.1.1
+
+Neighbor 2001:db8:1:1::2 remote-as 64100
+Network 2001:db8:2:1::1/64
+Network 2001:db8:8:1::1/128

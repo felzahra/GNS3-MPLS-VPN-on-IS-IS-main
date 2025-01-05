@@ -1,0 +1,32 @@
+conf t 
+hostname R4
+no ip domain lookup
+Ipv6 unicast-routing
+int f0/1
+
+ip add 10.9.4.1 255.255.255.252
+Ipv6 address 2001:db8:1:13::1/64
+
+no shut
+int lo 0
+ip add 4.4.4.4 255.255.255.255
+Ipv6 address 2001:db8:8:11::1/128
+no shut
+exit
+int lo 1
+ip add 192.168.3.1 255.255.255.0
+Ipv6 address 2001:db8:4:1::1/64
+
+no shut
+exit
+router eigrp 64500
+network 10.9.4.0 0.0.0.3
+network 192.168.3.0 0.0.0.255
+network 4.4.4.4 0.0.0.0
+no auto-summary
+network 2001:db8:1:13::1/64
+network 2001:db8:8:11::1/128
+network 2001:db8:4:1::1/64
+
+end
+
